@@ -7,16 +7,8 @@
 define(function (require) {
     'use strict';
 
-    var $ = require('jquery'),
-        convert = require('tower-of-hanoi/convert'),
-        core = require('tower-of-hanoi/toh-core'),
-        ui = require('tower-of-hanoi/toh-ui'),
-        main = require('tower-of-hanoi/main');
+    var ToH = require('tower-of-hanoi/toh');
 
     //Return the module value.
-    return {
-        version: '0.0.1, jQuery version is: ' + $.fn.jquery,
-        convert: convert,
-        main: main
-    };
+    return ToH;
 });

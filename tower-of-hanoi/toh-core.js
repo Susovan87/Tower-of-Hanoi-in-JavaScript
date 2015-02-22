@@ -1,4 +1,6 @@
 define([], function() {
+	'use strict';
+	
 	var recursive_solver = function (n, from, to , via)
 	{
 		if (n==0) return;

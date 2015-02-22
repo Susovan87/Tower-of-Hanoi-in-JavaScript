@@ -33,29 +33,17 @@ if (typeof require === 'function' && require.config) {
         define(['tower-of-hanoi', 'jquery'], factory);
     } else {
         // Browser globals
-        factory(root.toh, root.jQuery);
+        factory(root.ToH, root.jQuery);
     }
-}(this, function (toh, $) {
+}(this, function (ToH, $) {
     'use strict';
 
     test('version test', function () {
         expect(1);
-        strictEqual(toh.version,
+        var toh = new ToH();
+        strictEqual(toh.version(),
             '0.0.1, jQuery version is: ' + $.fn.jquery,
             'Version concatenated');
     });
 
-    test('conversion test', function () {
-        expect(1);
-        strictEqual(toh.convert('Harry & Sally'),
-            'Harry &amp; Sally',
-            'Ampersand converted');
-    });
-
-    test('conversion test', function () {
-        expect(1);
-        strictEqual(toh.convert('Harry & Sally'),
-            'Harry &amp; Sally',
-            'Ampersand converted');
-    });
 }));
