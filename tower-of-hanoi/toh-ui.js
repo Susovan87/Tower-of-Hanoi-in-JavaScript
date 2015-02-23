@@ -43,7 +43,7 @@ define(['jquery','./peg','./disk'], function($,Peg,Disk) {
 	}
 	ToHUI.prototype.processDiskText = function(text){
 		var textArray = ['','']
-		if(isArray(text)){
+		if(isArray(text) && text.length>0){
 			this.diskText = generateArray(text,this.diskCount);
 		}else if(text){
 			this.diskText = generateArray([text],this.diskCount);
@@ -53,7 +53,7 @@ define(['jquery','./peg','./disk'], function($,Peg,Disk) {
 	}
 	ToHUI.prototype.processDiskColor = function(diskColor){
 		var colorArr = ['#CC3300','#CC9933','#CC6633','#999933','#9966FF','#00CCFF'];
-		if(isArray(diskColor)){
+		if(isArray(diskColor) && diskColor.length>0){
 			this.diskColor = generateArray(diskColor,this.diskCount);
 		}else{
 			this.diskColor = generateArray(colorArr,this.diskCount);
