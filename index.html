@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Tower of Hanoi in JavaScript</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="./js/underscore-min.js"></script>
+    <script src="./js/tower-of-hanoi.js"></script>
+    <style type="text/css">
+    	.toh-container{
+    		margin:0 auto;
+    	}
+    	textarea{
+    		display: block;
+    		margin:20px auto;
+    	}
+    	.controls{
+    		margin:10px auto;
+    		width: 420px;
+    	}
+    	.controls button{
+    		margin: 0 5px;
+    	}
+    	#re-generate{
+    		display: block;
+    		margin:0 auto;
+    	}
+    	input.invalid, textarea.invalid{
+		    border: 2px solid red;
+		}
+		 
+		input.valid, textarea.valid{
+		    border: 2px solid green;
+		}
+        .footer{
+            margin:0 auto;
+        }
+        p, .footer, .version{
+            text-align: center;
+        }
+        a:link {text-decoration: none}
+        a:visited {text-decoration: none}
+        a:active {text-decoration: none}
+        a:hover {text-decoration: underline overline; color: red;}
+    </style>
+</head>
+<body>
+	<div class="container">
+		<div class="toh-container"></div>
+		<div class="controls">
+			<button type="button" id="backAll">&lt;&lt; Back all</button>
+			<button type="button" id="back">&lt; Back</button>
+			<button type="button" id="stop">|| Stop</button>
+			<button type="button" id="play">Play &gt;</button>
+			<button type="button" id="playAll">Play all &gt;&gt;</button>
+		</div>
+		<textarea id="config-json" rows="15" cols="50"></textarea>
+		<button type="button" id="re-generate">Re-generate</button>
+        <p style="font-size: 150%;"><a href="https://github.com/Susovan87/tower-of-hanoi-js">Find source on Github</a></p>
+        <div class="version" style="font-size: 80%;"></div>
+        <div class="footer">© 2015 <a href="https://github.com/Susovan87">Susovan Ghosh</a>. All rights reserved.</div>
+	</div>
+    <script type="text/javascript">
+    	var defaultConfig = {
+        	disk:{
+        		count: 3,
+        		maxWidth: 200,
+        		minWidth: 100,
+        		height: 20,
+                text:[],
+                color:[]
+        	},
+        	peg:{
+        		width: 10
+        	}
+        };
+        var refreshButton = function(state){
+        	var progress = toh.getProgress();
+        	if(state=='start'){
+        		$('#backAll').attr('disabled','disabled');
+	        	$('#back').attr('disabled','disabled');
+	        	$('#play').attr('disabled','disabled');
+	        	$('#playAll').attr('disabled','disabled');
+
+	        	$('#stop').removeAttr('disabled');
+        	}else{
+        		$('#stop').attr('disabled','disabled');
+
+        		if(progress==0){
+        			$('#backAll').attr('disabled','disabled');
+	        		$('#back').attr('disabled','disabled');
+        		}else{
+        			$('#backAll').removeAttr('disabled');
+	        		$('#back').removeAttr('disabled');
+        		}
+	        	
+	        	if(progress==toh.moves.length){
+	        		$('#play').attr('disabled','disabled');
+	        		$('#playAll').attr('disabled','disabled');
+	        	}else{
+	        		$('#play').removeAttr('disabled');
+	        		$('#playAll').removeAttr('disabled');
+	        	}
+	    	}
+        }
+        var toh;
+        var generateToH = function(config){
+        	if(toh){
+        		$(toh).off();
+        		$('.toh-container').empty().removeAttr('style');
+        	}
+
+        	toh = new window.ToH(config);
+	        $(toh).on('start',function(){
+	        	refreshButton('start');
+	        });
+	        $(toh).on('stop',function(){
+	        	refreshButton('stop');
+	        });
+	        toh.render($('.toh-container'));
+	        refreshButton('stop');
+        };
+        generateToH(defaultConfig);       
+
+        $('#backAll').click(function(){
+        	toh.runAllBackward();
+        });
+        $('#back').click(function(){
+        	toh.prev();
+        });
+        $('#stop').click(function(){
+        	toh.pause();
+        	$('#stop').attr('disabled','disabled');
+        });
+        $('#play').click(function(){
+        	toh.next();
+        });
+        $('#playAll').click(function(){
+        	toh.runAll();
+        });
+
+		$("#config-json").val(JSON.stringify(defaultConfig, null, 4));        
+		$('#re-generate').click(function(){
+			try{
+				var config = JSON.parse($("#config-json").val());
+				generateToH(config);
+                $("#config-json").val(JSON.stringify(config, null, 4)).removeClass("invalid").addClass("valid");
+			}catch(err){
+				$("#config-json").removeClass("valid").addClass("invalid");
+			}
+		});
+        $(".version").text('v'+toh.version());
+    </script>
+</body>
+</html>
+
