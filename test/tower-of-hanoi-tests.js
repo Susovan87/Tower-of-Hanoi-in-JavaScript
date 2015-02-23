@@ -42,7 +42,7 @@ if (typeof require === 'function' && require.config) {
         expect(1);
         var toh = new ToH();
         strictEqual(toh.version(),
-            '0.0.1, jQuery version is: ' + $.fn.jquery,
+            '1.0.0, jQuery version is: ' + $.fn.jquery,
             'Version concatenated');
     });
 
