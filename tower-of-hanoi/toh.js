@@ -113,7 +113,7 @@ define(["underscore","jquery","./toh-core","./toh-ui"], function(_,$,Core,UI) {
 	};
 
 	ToH.prototype.version = function(){
-		return '1.0.0, jQuery version is: ' + $.fn.jquery;
+		return 'v1.0.0, jQuery: ' + $.fn.jquery;
 	};
 
 
