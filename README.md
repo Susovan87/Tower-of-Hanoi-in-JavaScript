@@ -2,6 +2,8 @@
 
 This is a **Tower of Hanoi** JavaScript library work both with browser globals or with an AMD loader. The minified library file present inside **./dist**.
 
+#### See [Live Demo](http://susovan87.github.io/tower-of-hanoi-js)
+
 This library also depends on two external libraries:
 
 * [jQuery](http://jquery.com/)
