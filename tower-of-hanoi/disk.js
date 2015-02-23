@@ -1,7 +1,7 @@
 define(["jquery"], function($) {
 	'use strict';
 
-	var Dec = function(id, config){
+	var Disk = function(id, config){
 		config = config || {};
 		this.id = id;
 		this.color = config.color || 'lightblue';
@@ -14,9 +14,9 @@ define(["jquery"], function($) {
 		this.left = 0;
 		this.top = 0;
 	}
-	Dec.prototype.render = function () {
+	Disk.prototype.render = function () {
 		var ele = document.createElement("div");
-		ele.setAttribute("class","dec");
+		ele.setAttribute("class","disk");
         
         this.$el = $(ele);
         this.$el.text(this.text)
@@ -33,16 +33,16 @@ define(["jquery"], function($) {
 
 	    return this;
 	}
-	Dec.prototype.put = function (peg) {
-		this.top = this.containerHeight - ((peg.decs.length+1)*this.height);
+	Disk.prototype.put = function (peg) {
+		this.top = this.containerHeight - ((peg.disks.length+1)*this.height);
 		this.left = (this.pegShift*((peg.id*2)+1)) - (this.width/2);
 		peg.add(this);
 		if(this.$el){
 			this.$el.css({top: this.top, left: this.left});
 		}
 	}
-	Dec.prototype.move = function (peg, callback) {
-		this.top = this.containerHeight - ((peg.decs.length+1)*this.height);
+	Disk.prototype.move = function (peg, callback) {
+		this.top = this.containerHeight - ((peg.disks.length+1)*this.height);
 		this.left = (this.pegShift*((peg.id*2)+1)) - (this.width/2);
 		peg.add(this);
 
@@ -52,5 +52,5 @@ define(["jquery"], function($) {
 			.animate({top: this.top+'px'}, "slow", callback);
 	}
 
-	return Dec;
+	return Disk;
 });

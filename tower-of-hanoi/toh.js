@@ -4,9 +4,9 @@ define(["underscore","jquery","./toh-core","./toh-ui"], function(_,$,Core,UI) {
 	var ToH = function(config){
 		config = config || {};
 		
-		config.dec = config.dec || {}
-		this.decCount = config.dec.count = config.dec.count || 3;
-		this.core = new Core(this.decCount);
+		config.disk = config.disk || {}
+		this.diskCount = config.disk.count = config.disk.count || 3;
+		this.core = new Core(this.diskCount);
 		this.ui = new UI(config);
 		this.moves = this.core.solve();
 		this.currMoveIndex = 0;
@@ -25,7 +25,7 @@ define(["underscore","jquery","./toh-core","./toh-ui"], function(_,$,Core,UI) {
 		this.running = true;
 		var currMoveIndex = this.currMoveIndex;
 		$(this).trigger('start', [currMoveIndex]);
-		this.ui.moveDec(this.moves[currMoveIndex][0],this.moves[currMoveIndex][1],function(){
+		this.ui.moveDisk(this.moves[currMoveIndex][0],this.moves[currMoveIndex][1],function(){
 			this.running = false;
 			$(this).trigger('stop', [currMoveIndex]);
 			if(callback) callback();
@@ -42,7 +42,7 @@ define(["underscore","jquery","./toh-core","./toh-ui"], function(_,$,Core,UI) {
 		var currMoveIndex = this.currMoveIndex;
 		var lastMove = this.moves[currMoveIndex-1];
 		$(this).trigger('start', [currMoveIndex*-1]);
-		this.ui.moveDec(lastMove[1],lastMove[0],function(){
+		this.ui.moveDisk(lastMove[1],lastMove[0],function(){
 			this.running = false;
 			$(this).trigger('stop', [currMoveIndex*-1]);
 			if(callback) callback();
@@ -62,7 +62,7 @@ define(["underscore","jquery","./toh-core","./toh-ui"], function(_,$,Core,UI) {
 			var next = list.shift();
 			if(next && this.running){
 				this.currMoveIndex++;
-				this.ui.moveDec(next[0],next[1],moveNext.bind(this));
+				this.ui.moveDisk(next[0],next[1],moveNext.bind(this));
 			}else{
 				this.running = false;
 				$(this).trigger('stop', [currMoveIndex]);
@@ -86,7 +86,7 @@ define(["underscore","jquery","./toh-core","./toh-ui"], function(_,$,Core,UI) {
 			var next = list.pop();
 			if(next && this.running){
 				this.currMoveIndex--;
-				this.ui.moveDec(next[1],next[0],moveNext.bind(this));
+				this.ui.moveDisk(next[1],next[0],moveNext.bind(this));
 			}else{
 				this.running = false;
 				$(this).trigger('stop', [currMoveIndex]);

@@ -9,13 +9,13 @@ define(["jquery"], function($) {
 		this.color = config.color || 'gray';
 		this.sideMargin = config.sideMargin || this.height;
 		this.topMargin = config.topMargin || this.height;
-		this.decs = [];
+		this.disks = [];
 	}
 	Peg.prototype.add = function(peg){
-		this.decs.push(peg);
+		this.disks.push(peg);
 	}
 	Peg.prototype.remove = function(){
-		return this.decs.pop();
+		return this.disks.pop();
 	}
 	Peg.prototype.render = function(){
 		var ele = document.createElement("div");

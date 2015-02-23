@@ -1,4 +1,4 @@
-define(['jquery','./peg','./dec'], function($,Peg,Dec) {
+define(['jquery','./peg','./disk'], function($,Peg,Disk) {
 	'use strict';
 
 	var isArray = function(obj){
@@ -17,46 +17,46 @@ define(['jquery','./peg','./dec'], function($,Peg,Dec) {
 	var ToHUI = function(config){
 		config = config || {};
 		
-		var decConfig = config.dec || {}
-		this.decCount = decConfig.count || 3;
-		this.processDecColor(decConfig.color);
-		this.processDecText(decConfig.text);
-		this.decMaxWidth = decConfig.maxWidth || 200;
-		this.decMinWidth = decConfig.minWidth || 100;
-		this.decHeight = decConfig.height || 20;
+		var diskConfig = config.disk || {}
+		this.diskCount = diskConfig.count || 3;
+		this.processDiskColor(diskConfig.color);
+		this.processDiskText(diskConfig.text);
+		this.diskMaxWidth = diskConfig.maxWidth || 200;
+		this.diskMinWidth = diskConfig.minWidth || 100;
+		this.diskHeight = diskConfig.height || 20;
 
 		var pegConfig = config.peg || {}
 		this.pegWidth = pegConfig.width || 10;
-		this.pegHeight = pegConfig.height || (this.decCount*this.decHeight)*1.5;
+		this.pegHeight = pegConfig.height || (this.diskCount*this.diskHeight)*1.5;
 
-		this.containerWidth = (this.decMaxWidth + this.pegWidth)*3;
-		this.containerHeight = this.pegHeight*1.5 + this.decHeight*1.5;
+		this.containerWidth = (this.diskMaxWidth + this.pegWidth)*3;
+		this.containerHeight = this.pegHeight*1.5 + this.diskHeight*1.5;
 
 		pegConfig = {
 			height:this.pegHeight,
 			width:this.pegWidth,
-			sideMargin:(this.decMaxWidth/2),
+			sideMargin:(this.diskMaxWidth/2),
 			topMargin:this.containerHeight-this.pegHeight
 		};
 		this.pegs = [new Peg(0, pegConfig), new Peg(1, pegConfig), new Peg(2, pegConfig)];
 
 	}
-	ToHUI.prototype.processDecText = function(text){
+	ToHUI.prototype.processDiskText = function(text){
 		var textArray = ['','']
 		if(isArray(text)){
-			this.decText = generateArray(text,this.decCount);
+			this.diskText = generateArray(text,this.diskCount);
 		}else if(text){
-			this.decText = generateArray([text],this.decCount);
+			this.diskText = generateArray([text],this.diskCount);
 		}else{
-			this.decText = generateArray(textArray,this.decCount);
+			this.diskText = generateArray(textArray,this.diskCount);
 		}
 	}
-	ToHUI.prototype.processDecColor = function(decColor){
+	ToHUI.prototype.processDiskColor = function(diskColor){
 		var colorArr = ['#CC3300','#CC9933','#CC6633','#999933','#9966FF','#00CCFF'];
-		if(isArray(decColor)){
-			this.decColor = generateArray(decColor,this.decCount);
+		if(isArray(diskColor)){
+			this.diskColor = generateArray(diskColor,this.diskCount);
 		}else{
-			this.decColor = generateArray(colorArr,this.decCount);
+			this.diskColor = generateArray(colorArr,this.diskCount);
 		}
 	}
 	ToHUI.prototype.render = function(elm){
@@ -80,29 +80,29 @@ define(['jquery','./peg','./dec'], function($,Peg,Dec) {
 			.append(this.pegs[1].render().$el)
 			.append(this.pegs[2].render().$el);
 			
-		var decs = [];
-		for (i = 0; i < this.decCount; i++) { 
-		    var dec = new Dec(i, {
-		    	color: this.decColor[i],
-		    	width: this.decMaxWidth-((this.decMaxWidth-this.decMinWidth)/this.decCount*(i+1)),
-		    	height: this.decHeight,
-		    	text: this.decText[i],
+		var disks = [];
+		for (i = 0; i < this.diskCount; i++) { 
+		    var disk = new Disk(i, {
+		    	color: this.diskColor[i],
+		    	width: this.diskMaxWidth-((this.diskMaxWidth-this.diskMinWidth)/this.diskCount*(i+1)),
+		    	height: this.diskHeight,
+		    	text: this.diskText[i],
 		    	containerHeight: this.containerHeight,
-		    	pegShift: (this.decMaxWidth+this.pegWidth)/2
+		    	pegShift: (this.diskMaxWidth+this.pegWidth)/2
 		    });
-			dec.put(this.pegs[0]);
-			this.$container.append(dec.render().$el)
-			decs.push(dec);
+			disk.put(this.pegs[0]);
+			this.$container.append(disk.render().$el)
+			disks.push(disk);
 		}
 	}
-	ToHUI.prototype.moveDec = function(from, to, callback){
+	ToHUI.prototype.moveDisk = function(from, to, callback){
 		this.pegs[from].remove().move(this.pegs[to], callback);
 	};	
 	ToHUI.prototype.runMoves = function(list, callback){
 		var moveNext = function(){
 			var next = list.shift();
 			if(next){
-				this.moveDec(next[0],next[1],moveNext.bind(this));
+				this.moveDisk(next[0],next[1],moveNext.bind(this));
 			}else{
 				if(callback) callback();
 			}
