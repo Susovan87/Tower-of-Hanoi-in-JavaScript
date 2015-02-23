@@ -27,7 +27,7 @@ define(['jquery','./peg','./disk'], function($,Peg,Disk) {
 
 		var pegConfig = config.peg || {}
 		this.pegWidth = pegConfig.width || 10;
-		this.pegHeight = pegConfig.height || (this.diskCount*this.diskHeight)*1.5;
+		this.pegHeight = pegConfig.height || Math.min((this.diskCount*this.diskHeight)*1.5, (this.diskCount+3)*this.diskHeight);
 
 		this.containerWidth = (this.diskMaxWidth + this.pegWidth)*3;
 		this.containerHeight = this.pegHeight*1.5 + this.diskHeight*1.5;
