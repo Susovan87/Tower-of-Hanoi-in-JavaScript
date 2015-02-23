@@ -1,8 +1,9 @@
 # Tower of Hanoi in JavaScript
 
-This is a **Tower of Hanoi** JavaScript library work either with browser globals or with an AMD loader. The minified library file present inside **./dist**.
+This is a **Tower of Hanoi** JavaScript library work both with browser globals or with an AMD loader. The minified library file present inside **./dist**.
 
-The library also depends on two other libraries:
+This library also depends on two external libraries:
+
 * [jQuery](http://jquery.com/)
 * [underscorejs](http://underscorejs.org/)
 
