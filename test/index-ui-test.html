@@ -3,12 +3,29 @@
 <head>
     <meta charset="UTF-8" />
     <title>Manual UI Test</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <script src="../lib/jquery.js"></script>
     <script src="../lib/underscore.js"></script>
     <script src="../dist/tower-of-hanoi.js"></script>
     <style type="text/css">
+        .toh-controls{
+            font-size: 24px;
+            color: #808080;
+            margin:0 auto;
+            position: absolute;
+            top:5px;
+        }
+        .glyphicon{
+            margin: 0 5px;
+        }
+        .glyphicon:hover{
+            color:#2F4F4F;
+        }
+        .disabled{
+            color:#D3D3D3;
+        }
     	.toh-container{
-    		margin:0 auto;
+    		margin:5px auto;
     	}
     	textarea{
     		display: block;
@@ -36,7 +53,15 @@
 </head>
 <body>
 	<div class="container">
-		<div class="toh-container"></div>
+        <div class="toh-container">
+            <div class="toh-controls">
+                <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+            </div>
+        </div>
 		<div class="controls">
 			<button type="button" id="backAll">&lt;&lt; Back all</button>
 			<button type="button" id="back">&lt; Back</button>
